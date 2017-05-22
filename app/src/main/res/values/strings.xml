@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ReShelf</string>
+    <string name="title_activity_reshelf">Reshelf</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="search_hint">Szukaj</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
