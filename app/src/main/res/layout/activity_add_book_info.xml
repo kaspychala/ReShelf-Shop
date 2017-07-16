@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="10dp"
+    android:background="#eeeeee"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.apps.kasper.reshelf.AddBook"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Title"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/TitleView" />
+
+        <View
+            android:layout_width="330dp"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditTitle"
+            android:hint="Title"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:layout_width="345dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Author"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:id="@+id/AuthorView" />
+
+        <View
+            android:layout_width="330dp"
+            android:layout_height="2dp"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center_horizontal"/>
+
+        <EditText
+            android:layout_width="330dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditAuthor"
+            android:hint="Author"
+            android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="Publisher"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/PublisherView" />
+
+    <View
+        android:layout_width="330dp"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/EditPublisher"
+        android:hint="Publisher"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="Publication Date"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/DateView" />
+
+    <View
+        android:layout_width="330dp"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/EditDate"
+        android:hint="Publication Date"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="345dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:text="Genre"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"
+        android:id="@+id/GenreView" />
+
+    <View
+        android:layout_width="330dp"
+        android:layout_height="2dp"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"/>
+
+    <EditText
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/EditGenre"
+        android:hint="Genre"
+        android:layout_gravity="center_horizontal" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:src="@drawable/photo1"
+        android:layout_gravity="center"/>
+
+    </LinearLayout>
+

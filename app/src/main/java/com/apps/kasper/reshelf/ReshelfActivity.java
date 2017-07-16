@@ -48,7 +48,7 @@ public class ReshelfActivity extends AppCompatActivity
         setContentView(R.layout.activity_reshelf);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final Intent intent = new Intent(this,CameraActivity.class);
+        final Intent intent = new Intent(this,AddBookSteps.class);
         final Intent login = new Intent(this,LoginActivity.class);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
