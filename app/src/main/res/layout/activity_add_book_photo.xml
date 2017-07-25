@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/AddPhotoView"
+        android:layout_width="206dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/plus_photo"
+        android:padding="1dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/border_image"
+        android:alpha="0.5"
+        android:clickable="true"/>
+</RelativeLayout>

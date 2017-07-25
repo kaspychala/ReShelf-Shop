@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:paddingTop="10dp"
-    android:background="#eeeeee"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.apps.kasper.reshelf.AddBook"
     android:layout_height="match_parent"
@@ -136,14 +135,5 @@
         android:hint="Genre"
         android:layout_gravity="center_horizontal" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/photo1"
-        android:layout_gravity="center"/>
-
-    </LinearLayout>
+</LinearLayout>
 

@@ -25,4 +25,10 @@ public class AppConfig {
         }
         return c; // returns null if camera is unavailable
     }
+
+    public static String photoPath ="null";
+
+    public static int position=0;
+
+    public static boolean refresh=false;
 }

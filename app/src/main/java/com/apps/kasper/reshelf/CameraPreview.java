@@ -4,16 +4,22 @@ package com.apps.kasper.reshelf;
  * Created by Kasper on 21.05.2017.
  */
 
+import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.content.Context;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.apps.kasper.reshelf.AppConfig.getCameraInstance;
 
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = "cameraTAG";
@@ -57,7 +63,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         // stop preview before making changes
         try {
-            mCamera.stopPreview();
+            //mCamera.stopPreview();
         } catch (Exception e){
             // ignore: tried to stop a non-existent preview
         }
@@ -68,6 +74,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // start preview with new settings
         try {
             Camera.Parameters params = mCamera.getParameters();
+            params.setPictureSize(1280,720);
 
             List<String> focusModes = params.getSupportedFocusModes();
             if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
@@ -77,11 +84,27 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 mCamera.setParameters(params);
             }
             mCamera.setPreviewDisplay(mHolder);
-            mCamera.setDisplayOrientation(90);
+            int rotation =  ((Activity) getContext()).getWindowManager().getDefaultDisplay().getRotation();
+            switch (rotation) {
+                case Surface.ROTATION_90:
+                    mCamera.setDisplayOrientation(0);
+                    break;
+                case Surface.ROTATION_270:
+                    mCamera.setDisplayOrientation(180);
+                    break;
+                default:
+                    mCamera.setDisplayOrientation(90);
+                    break;
+            }
+
+
+
             mCamera.startPreview();
 
         } catch (Exception e){
             Log.d(TAG, "Error starting camera preview: " + e.getMessage());
         }
     }
+
+
 }
