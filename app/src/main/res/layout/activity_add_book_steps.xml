@@ -9,6 +9,9 @@
     app:ms_bottomNavigationBackground="@color/colorPrimary"
     app:ms_nextButtonColor="@android:color/white"
     app:ms_backButtonColor="@android:color/white"
-    app:ms_completeButtonColor="@android:color/white">
+    app:ms_completeButtonColor="@android:color/white"
+    app:ms_tabNavigationEnabled="false"
+    app:ms_showErrorStateOnBackEnabled="true"
+    app:ms_showErrorStateEnabled="true">
 
 </com.stepstone.stepper.StepperLayout>

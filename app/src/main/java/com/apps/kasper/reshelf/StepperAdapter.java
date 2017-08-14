@@ -50,7 +50,7 @@ public class StepperAdapter extends AbstractFragmentStepAdapter {
         }
         if(position==2){
             return new StepViewModel.Builder(context)
-                    .setTitle("PAYMENT") //can be a CharSequence instead
+                    .setTitle("PRICE AND DELIVERY") //can be a CharSequence instead
                     .create();
         }
         else{

@@ -5,30 +5,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
-import com.stepstone.stepper.adapter.StepAdapter;
 
-import org.w3c.dom.Text;
-
-import static android.R.attr.bitmap;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
 /**
  * Created by Kasper on 19.07.2017.
@@ -36,7 +30,12 @@ import static android.R.attr.bitmap;
 
 public class StepFragment extends Fragment implements Step {
 
-    ImageView addPhoto;
+    private ImageView addPhoto;
+    private Vibrator vibrator;
+    private ExpandableLayout expandableOurPrice;
+    private ExpandableLayout expandableYourPrice;
+    private TextView ourPriceList;
+    private LinearLayout yourPriceList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,7 +44,8 @@ public class StepFragment extends Fragment implements Step {
         Bundle bundle = getArguments();
         int position = bundle.getInt("step");
         final Intent intent = new Intent(getContext(),CameraActivity.class);
-        
+        vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+
         if(position==0){
             v = inflater.inflate(R.layout.activity_add_book_photo, container, false);
             addPhoto = (ImageView) v.findViewById(R.id.AddPhotoView);
@@ -70,6 +70,31 @@ public class StepFragment extends Fragment implements Step {
         }
         else{
             v = inflater.inflate(R.layout.activity_add_book_payment, container, false);
+            expandableOurPrice = (ExpandableLayout) v.findViewById(R.id.expandable_our_price);
+            expandableYourPrice = (ExpandableLayout) v.findViewById(R.id.expandable_your_price);
+            ourPriceList = (TextView) v.findViewById(R.id.our_price_button);
+            yourPriceList = (LinearLayout) v.findViewById(R.id.your_price_layout);
+            ourPriceList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (expandableOurPrice.isExpanded()) {
+                        expandableOurPrice.collapse();
+                    } else {
+                        expandableOurPrice.expand();
+                    }
+                }
+            });
+            yourPriceList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (expandableYourPrice.isExpanded()) {
+                        expandableYourPrice.collapse();
+                    } else {
+                        expandableYourPrice.expand();
+                    }
+                }
+            });
+
         }
 
         return v;
@@ -77,7 +102,8 @@ public class StepFragment extends Fragment implements Step {
     
     @Override
     public VerificationError verifyStep() {
-        //return null if the user can go to the next step, create a new VerificationError instance otherwise
+       // if(AppConfig.photoPath=="null"){return new VerificationError("");}
+        //else return null;
         return null;
     }
 
@@ -87,7 +113,8 @@ public class StepFragment extends Fragment implements Step {
 
     @Override
     public void onError(@NonNull VerificationError error) {
-        //handle error inside of the fragment, e.g. show error on EditText
+        vibrator.vibrate(500);
+        Toast.makeText(getContext(),"Complete before going next!",Toast.LENGTH_LONG).show();
     }
 
     @Override

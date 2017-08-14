@@ -18,6 +18,7 @@ package com.apps.kasper.reshelf;
         import android.net.Uri;
         import android.os.Bundle;
         import android.os.Environment;
+        import android.os.Vibrator;
         import android.util.Log;
         import android.view.Display;
         import android.view.Surface;
@@ -48,6 +49,9 @@ public class CameraActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        Button captureButton = (Button) findViewById(R.id.button_capture);
+        final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
         intent = new Intent(this, AddBookInfo.class);
 
         // Create an instance of Camera
@@ -58,10 +62,10 @@ public class CameraActivity extends Activity {
         FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
         preview.addView(mPreview);
 
-        Button captureButton = (Button) findViewById(R.id.button_capture);
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(25);
                 mCamera.takePicture(null, null, mPicture);
             }
         });
@@ -107,10 +111,10 @@ public class CameraActivity extends Activity {
         File mediaStorageDir = new File(
                 Environment
                         .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                "MyCameraApp");
+                "ReShelf");
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d("MyCameraApp", "failed to create directory");
+                Log.d("ReShelf", "failed to create directory");
                 return null;
             }
         }
@@ -144,6 +148,9 @@ public class CameraActivity extends Activity {
         rotatedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
         fos.flush();
         fos.close();
+        //finish camera activity
+        startActivity(intent);
+        finish();
     }
 
     public String ScreenOrientation() {
