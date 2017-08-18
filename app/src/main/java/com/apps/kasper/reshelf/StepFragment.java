@@ -1,6 +1,7 @@
 package com.apps.kasper.reshelf;
 
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -24,6 +25,8 @@ import com.stepstone.stepper.VerificationError;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Kasper on 19.07.2017.
  */
@@ -34,8 +37,12 @@ public class StepFragment extends Fragment implements Step {
     private Vibrator vibrator;
     private ExpandableLayout expandableOurPrice;
     private ExpandableLayout expandableYourPrice;
-    private TextView ourPriceList;
+    private TextView ourPriceArrow;
+    private TextView yourPriceArrow;
+    private LinearLayout ourPriceList;
     private LinearLayout yourPriceList;
+    private int rotationAngleOur = 0;
+    private int rotationAngleYour = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -72,15 +79,21 @@ public class StepFragment extends Fragment implements Step {
             v = inflater.inflate(R.layout.activity_add_book_payment, container, false);
             expandableOurPrice = (ExpandableLayout) v.findViewById(R.id.expandable_our_price);
             expandableYourPrice = (ExpandableLayout) v.findViewById(R.id.expandable_your_price);
-            ourPriceList = (TextView) v.findViewById(R.id.our_price_button);
+            ourPriceArrow = (TextView) v.findViewById(R.id.our_price_arrow);
+            yourPriceArrow = (TextView) v.findViewById(R.id.your_price_arrow);
+            ourPriceList = (LinearLayout) v.findViewById(R.id.our_price_layout);
             yourPriceList = (LinearLayout) v.findViewById(R.id.your_price_layout);
             ourPriceList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (expandableOurPrice.isExpanded()) {
                         expandableOurPrice.collapse();
+                        rotationAngleOur = rotationAngleOur == 0 ? 180 : 0;
+                        ourPriceArrow.animate().rotation(rotationAngleOur).start();
                     } else {
                         expandableOurPrice.expand();
+                        rotationAngleOur = rotationAngleOur == 0 ? 180 : 0;
+                        ourPriceArrow.animate().rotation(rotationAngleOur).start();
                     }
                 }
             });
@@ -89,8 +102,12 @@ public class StepFragment extends Fragment implements Step {
                 public void onClick(View view) {
                     if (expandableYourPrice.isExpanded()) {
                         expandableYourPrice.collapse();
+                        rotationAngleYour = rotationAngleYour == 0 ? 180 : 0;
+                        yourPriceArrow.animate().rotation(rotationAngleYour).setDuration(500).start();
                     } else {
                         expandableYourPrice.expand();
+                        rotationAngleYour = rotationAngleYour == 0 ? 180 : 0;
+                        yourPriceArrow.animate().rotation(rotationAngleYour).setDuration(500).start();
                     }
                 }
             });
