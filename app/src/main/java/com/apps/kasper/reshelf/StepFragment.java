@@ -89,11 +89,11 @@ public class StepFragment extends Fragment implements Step {
                     if (expandableOurPrice.isExpanded()) {
                         expandableOurPrice.collapse();
                         rotationAngleOur = rotationAngleOur == 0 ? 180 : 0;
-                        ourPriceArrow.animate().rotation(rotationAngleOur).start();
+                        ourPriceArrow.animate().rotation(rotationAngleOur).setDuration(500).start();
                     } else {
                         expandableOurPrice.expand();
                         rotationAngleOur = rotationAngleOur == 0 ? 180 : 0;
-                        ourPriceArrow.animate().rotation(rotationAngleOur).start();
+                        ourPriceArrow.animate().rotation(rotationAngleOur).setDuration(500).start();
                     }
                 }
             });
