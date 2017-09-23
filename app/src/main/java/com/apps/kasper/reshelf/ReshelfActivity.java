@@ -60,11 +60,6 @@ public class ReshelfActivity extends AppCompatActivity
                 }
             });
         }
-        else{
-            Toast.makeText(getApplicationContext(),
-                    "Are you sure you have a camera?", Toast.LENGTH_LONG)
-                    .show();
-        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

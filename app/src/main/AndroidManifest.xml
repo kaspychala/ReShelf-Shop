@@ -39,7 +39,8 @@
             android:name=".RegisterActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CameraActivity" />
+            android:name=".CameraActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AddBookInfo"
             android:screenOrientation="portrait"

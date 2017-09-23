@@ -38,7 +38,10 @@ public class AddBookInfo extends AppCompatActivity{
     {
         super.onBackPressed();
         AppConfig.refresh=false;
-        AppConfig.photoPath="null";
+        AppConfig.photoPathFront="null";
+        AppConfig.photoPathBack="null";
+        AppConfig.photoFront=false;
+        AppConfig.photoBack=false;
         finish();
     }
 

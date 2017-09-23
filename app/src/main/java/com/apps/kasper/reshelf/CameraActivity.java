@@ -15,10 +15,15 @@ package com.apps.kasper.reshelf;
         import android.hardware.SensorEventListener;
         import android.hardware.SensorManager;
         import android.media.ExifInterface;
+        import android.media.Image;
         import android.net.Uri;
         import android.os.Bundle;
         import android.os.Environment;
+        import android.os.Handler;
         import android.os.Vibrator;
+        import android.support.design.widget.Snackbar;
+        import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+        import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
         import android.util.Log;
         import android.view.Display;
         import android.view.Surface;
@@ -26,6 +31,10 @@ package com.apps.kasper.reshelf;
         import android.view.WindowManager;
         import android.widget.Button;
         import android.widget.FrameLayout;
+        import android.widget.ImageButton;
+        import android.widget.ImageView;
+        import android.widget.LinearLayout;
+        import android.widget.Toast;
 
         import java.io.File;
         import java.io.FileNotFoundException;
@@ -43,13 +52,61 @@ public class CameraActivity extends Activity {
     private CameraPreview mPreview;
     static File mediaFile;
     private Intent intent;
+    private ImageView front;
+    private ImageView back;
+    private ImageView imagePreview;
+    private FrameLayout imagePreviewLayout;
+    private FrameLayout barLayout;
+    private ImageButton backButton;
+    private ImageButton deleteButton;
+    private ImageButton doneButton;
+    private Button captureButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
-        Button captureButton = (Button) findViewById(R.id.button_capture);
+        front = (ImageView)findViewById(R.id.front);
+        back = (ImageView)findViewById(R.id.back);
+        imagePreview = (ImageView)findViewById(R.id.image_preview);
+        imagePreviewLayout = (FrameLayout)findViewById(R.id.image_preview_layout);
+        barLayout = (FrameLayout)findViewById(R.id.bar_layout);
+        captureButton = (Button) findViewById(R.id.button_capture);
+        backButton = (ImageButton) findViewById(R.id.back_button);
+        deleteButton = (ImageButton) findViewById(R.id.delete_button);
+        doneButton = (ImageButton) findViewById(R.id.done_button);
+
+        if(AppConfig.photoPathFront!="null" && AppConfig.photoPathBack!="null") {
+            barLayout.setVisibility(View.VISIBLE);
+            captureButton.setEnabled(false);
+        }
+        if(AppConfig.photoPathFront!="null"){
+            front.setAlpha(1f);
+            Bitmap myBitmap = BitmapFactory.decodeFile(AppConfig.photoPathFront);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),myBitmap);
+            final float roundPx = (float) myBitmap.getWidth() * 0.04f;
+            roundedBitmapDrawable.setCornerRadius(roundPx);
+            front.setImageDrawable(roundedBitmapDrawable);
+        }
+        if(AppConfig.photoPathBack!="null"){
+            back.setAlpha(1f);
+            Bitmap myBitmap = BitmapFactory.decodeFile(AppConfig.photoPathBack);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),BitmapFactory.decodeFile(AppConfig.photoPathBack));
+            final float roundPx = (float) myBitmap.getWidth() * 0.04f;
+            roundedBitmapDrawable.setCornerRadius(roundPx);
+            back.setImageDrawable(roundedBitmapDrawable);
+        }
+
+        if(AppConfig.photoFront==true){
+            imagePreview.setImageBitmap(BitmapFactory.decodeFile(AppConfig.photoPathFront));
+            imagePreviewLayout.setVisibility(View.VISIBLE);
+
+        }
+        if(AppConfig.photoBack==true){
+            imagePreview.setImageBitmap(BitmapFactory.decodeFile(AppConfig.photoPathBack));
+            imagePreviewLayout.setVisibility(View.VISIBLE);
+        }
         final Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         intent = new Intent(this, AddBookInfo.class);
@@ -65,8 +122,87 @@ public class CameraActivity extends Activity {
         captureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrator.vibrate(25);
-                mCamera.takePicture(null, null, mPicture);
+                if(AppConfig.photoPathFront!="null" || AppConfig.photoPathBack!="null") {
+                    vibrator.vibrate(25);
+                    mCamera.takePicture(null, null, mPicture);
+                    captureButton.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            barLayout.setVisibility(View.VISIBLE);
+                        }
+                    }, 500);
+                }
+                else {
+                    vibrator.vibrate(25);
+                    mCamera.takePicture(null, null, mPicture);
+                    captureButton.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            captureButton.setEnabled(true);
+                        }
+                    }, 500);
+                }
+            }
+        });
+
+        front.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AppConfig.photoPathFront!="null"){
+                    imagePreview.setImageBitmap(BitmapFactory.decodeFile(AppConfig.photoPathFront));
+                    imagePreviewLayout.setVisibility(View.VISIBLE);
+                    AppConfig.photoFront = true;
+                    AppConfig.photoBack = false;
+                }
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AppConfig.photoPathBack!="null"){
+                    imagePreview.setImageBitmap(BitmapFactory.decodeFile(AppConfig.photoPathBack));
+                    imagePreviewLayout.setVisibility(View.VISIBLE);
+                    AppConfig.photoBack = true;
+                    AppConfig.photoFront = false;
+                }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imagePreviewLayout.setVisibility(View.GONE);
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(AppConfig.photoFront){
+                    front.setImageDrawable(null);
+                    front.setAlpha(0.5f);
+                    AppConfig.photoPathFront="null";
+                    barLayout.setVisibility(View.GONE);
+                    captureButton.setEnabled(true);
+                }
+                if(AppConfig.photoBack){
+                    back.setImageDrawable(null);
+                    back.setAlpha(0.5f);
+                    AppConfig.photoPathBack="null";
+                    barLayout.setVisibility(View.GONE);
+                    captureButton.setEnabled(true);
+                }
+                imagePreviewLayout.setVisibility(View.GONE);
+
+            }
+        });
+        doneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -98,7 +234,12 @@ public class CameraActivity extends Activity {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
                 fos.close();
-                AppConfig.photoPath = mediaFile.toString();
+                if(AppConfig.photoPathFront=="null"){
+                    AppConfig.photoPathFront = mediaFile.toString();
+                }
+                else{
+                    AppConfig.photoPathBack = mediaFile.toString();
+                }
                 rotateImage(mediaFile.toString());
             } catch (FileNotFoundException e) {
 
@@ -149,8 +290,22 @@ public class CameraActivity extends Activity {
         fos.flush();
         fos.close();
         //finish camera activity
-        startActivity(intent);
-        finish();
+        if(front.getDrawable()==null) {
+            front.setAlpha(1f);
+            Bitmap myBitmap = BitmapFactory.decodeFile(AppConfig.photoPathFront);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),myBitmap);
+            final float roundPx = (float) myBitmap.getWidth() * 0.04f;
+            roundedBitmapDrawable.setCornerRadius(roundPx);
+            front.setImageDrawable(roundedBitmapDrawable);
+        }
+        else {
+            back.setAlpha(1f);
+            Bitmap myBitmap = BitmapFactory.decodeFile(AppConfig.photoPathBack);
+            RoundedBitmapDrawable roundedBitmapDrawable = RoundedBitmapDrawableFactory.create(getResources(),BitmapFactory.decodeFile(AppConfig.photoPathBack));
+            final float roundPx = (float) myBitmap.getWidth() * 0.04f;
+            roundedBitmapDrawable.setCornerRadius(roundPx);
+            back.setImageDrawable(roundedBitmapDrawable);
+        }
     }
 
     public String ScreenOrientation() {
@@ -173,8 +328,11 @@ public class CameraActivity extends Activity {
     @Override
     public void onBackPressed()
     {
-        super.onBackPressed();
-        startActivity(intent);
-        finish();
+        if(AppConfig.photoPathFront!="null" && AppConfig.photoPathBack!="null") {
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(this,"Please take pictures of both front and back of a book.",Toast.LENGTH_LONG).show();
+        }
     }
 }

@@ -13,6 +13,12 @@ public class AppConfig {
     // Server refresh books
     public static String URL_REFRESH = "http://reshelf.pl/php/refresh.php";
 
+    public static String photoPathFront = "null";
+    public static String photoPathBack = "null";
+
+    public static boolean photoFront = false;
+    public static boolean photoBack = false;
+
     public static RowBook RowBookData[];
 
     public static Camera getCameraInstance(){
@@ -25,8 +31,6 @@ public class AppConfig {
         }
         return c; // returns null if camera is unavailable
     }
-
-    public static String photoPath ="null";
 
     public static int position=0;
 

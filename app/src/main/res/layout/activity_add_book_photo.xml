@@ -1,20 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <ImageView
-        android:id="@+id/AddPhotoView"
-        android:layout_width="206dp"
-        android:layout_height="350dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        app:srcCompat="@drawable/plus_photo"
-        android:padding="1dp"
-        android:scaleType="fitXY"
-        android:background="@drawable/border_image"
-        android:alpha="0.5"
-        android:clickable="true"/>
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/layout_add_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:foreground="?selectableItemBackground"
+            android:background="@drawable/border_image"
+            android:clickable="true"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_margin="20dp">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:text="Take picture of front and back of a book."/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:text="+"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/AddPhotoFrontView"
+                android:layout_width="150dp"
+                android:layout_height="250dp"
+                android:layout_marginRight="15dp"
+                app:srcCompat="@drawable/plus_photo"
+                android:padding="1dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/border_image"
+                android:alpha="0.5"
+                android:clickable="true"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/AddPhotoBackView"
+                android:layout_width="150dp"
+                android:layout_height="250dp"
+                app:srcCompat="@drawable/plus_photo"
+                android:padding="1dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/border_image"
+                android:alpha="0.5"
+                android:clickable="true"
+                android:visibility="gone"/>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_new_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:foreground="?selectableItemBackground"
+            android:background="@drawable/border_image"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take new photos"
+                android:textSize="15sp"
+                android:layout_margin="10dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
